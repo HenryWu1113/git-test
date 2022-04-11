@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            width: 75%;
+            margin: auto;
+            padding: 1rem;
+            border: 1px solid black;
+        }
+
+        .wrap {
+            border: 5px dashed black;
+            margin: 50px;
+            padding: 50px 0;
+            position: relative;
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: black;
+            color: white;
+            text-align: center;
+            line-height: 100px;
+            font-size: 2rem;
+
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* 建立動畫 Animation */
+        /* 步驟一，先建立一組關鍵影格(keyframs)，設定動畫名稱，起始 from(0%)狀態、結束 to(100%)狀態 */
+
+        @keyframes animation {
+
+            /*  from */
+            0% {
+                background-color: red;
+                transform: translate(0, 0);
+            }
+
+            50% {
+                background-color: green;
+                transform: translate(50vw, 0) rotate(390deg) scale(1.5);
+                color: orange;
+                font-size: 3rem;
+                font-family: '微軟正黑體';
+                font-weight: bold;
+                border-radius: 50%;
+            }
+
+            /* to */
+            100% {
+                background-color: blue;
+
+            }
+        }
+
+        /* 步驟二，創建一個動畫專用的 class 用來設定動畫的各種屬性 */
+
+        .animation {
+            animation-name: animation;
+            animation-duration: 2s;
+
+            animation-delay: 0s;
+            /* 播放次數 */
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+            /*  播放方向
+                normal(預設)
+                alternate 交替播放 => 播放次數為奇數時為正向撥放，播放次數為偶數時為反向撥放
+            */
+
+            animation-direction: normal;
+            /* 
+                播放的填充模式 now、forwarda、backwards、both
+                當 animation-direction: normal 正向撥放 0 => 100%
+                none => 動畫結束時回到沒有進入動畫的初始狀態。
+                forwards => 停留在畫面的最後一幀
+                backwards => 當設定 delay 時，動畫一開始會停在第一幀，動畫結束後回到沒有進入動畫的初始狀態。
+                both => 動畫一開始在第一幀(紅色)，結束停留在動畫的最後一幀。
+
+                當 animation-direction: reverse 反向播放 100% => 0%
+
+            */
+            animation-fill-mode: both;
+
+            /* 控制動畫是否暫停或撥放，預設 running、或設定 paused */
+            animation-play-state: running;
+
+            /* 縮寫 */
+            /* 第一個時間為 duration，第二個時間為 delay */
+            animation: animation 2s 0.5s infinite ease-in-out both;
+        }
+
+        .multiple {
+            animation-name: rotateIt, moveIt;
+            animation-duration: 2s, 4s;
+
+            /* 縮寫 */
+            animation: rotateIt 3s infinite ease-in-out, moveIt 6s infinite ease-in-out;
+        }
+
+        @keyframes rotateIt {
+            50% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes moveIt {
+            50% {
+                left: 500px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>動畫</h1>
+        <p>動畫與轉場的差異:</p>
+
+        <h2>animation</h2>
+        <ul>
+            <li>可以設定關鍵影格(keyframs)控制動畫進度，產生更複雜的動畫。</li>
+            <li>網頁載入可以自動發生，也可以觸發發生(例如新增、刪除 class)，可以循環重複來回撥放等等。</li>
+        </ul>
+
+        <h2>transition</h2>
+        <ul>
+            <li>一定要有觸發條件，兩種樣式狀態的改變，通常透過偽類 :hover、:focus、:checked 等狀態 等等觸發。</li>
+            <li>無法在網頁載入時自動發生，且是一次性且沒有循環效果，必須再重新觸發一次。</li>
+        </ul>
+
+        <div class="wrap">
+            <div class="box animation">box</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>可套用多個動畫，用逗號隔開</h2>
+        <div class="wrap">
+            <div class="box multiple"></div>
+        </div>
+    </div>
+</body>
+
+</html>
